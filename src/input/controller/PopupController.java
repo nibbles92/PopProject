@@ -8,6 +8,7 @@ public class PopupController
 	private PopupDisplay myPopups;
 	private Thing myThing;
 	
+	
 	public PopupController()
 	{
 		myPopups = new PopupDisplay();
@@ -20,7 +21,13 @@ public class PopupController
 		myPopups.displayResponse("You typed in " + name);
 		
 		int age;
-		String tempAge = myPopups.getAnswer("You typed in " + name);
+		String tempAge = myPopups.getAnswer("How old are you");
+		
+		while(!isInteger(tempAge))
+		{
+			tempAge = myPopups.getAnswer("Type in an integer value!");
+		}
+		
 		if(isInteger(tempAge))
 		{
 			age = Integer.parseInt(tempAge);
@@ -32,8 +39,14 @@ public class PopupController
 		
 		myPopups.displayResponse("You typed in " + age);
 		double weight;
-		String tempWeight = myPopups.getAnswer("Type in your age");
+		String tempWeight = myPopups.getAnswer("What is your weight");
 
+		while(!isDouble(tempWeight))
+		{
+			tempWeight = myPopups.getAnswer("Give me a valid double value!!");
+		}
+		
+		
 		if(isDouble(tempWeight))
 		{
 			weight = Double.parseDouble((tempWeight));
@@ -48,6 +61,8 @@ public class PopupController
 		
 		myThing = new Thing(name, age, weight);
 		
+		myPopups.displayResponse(myThing.toString());
+		
 	}
 	
 	private boolean isInteger(String input)
@@ -57,6 +72,7 @@ public class PopupController
 		try
 		{
 			int validInteger = Integer.parseInt(input);
+			isInt = true;
 			
 		}
 		catch(NumberFormatException error)
@@ -68,11 +84,12 @@ public class PopupController
 	}
 	private boolean isDouble(String input)
 	{
-		boolean isInt = false;
+		boolean isDouble = false;
 		
 		try
 		{
 			Double validDouble = Double.parseDouble(input);
+			isDouble = true;
 			
 		}
 		catch(NumberFormatException error)
@@ -80,6 +97,6 @@ public class PopupController
 			myPopups.displayResponse("You did not type in a valid interger");
 		}
 		
-		return isInt;
+		return isDouble;
 	}
 }
